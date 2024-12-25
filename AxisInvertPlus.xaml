@@ -1,0 +1,95 @@
+<plugin:PluginViewBase xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:plugin="clr-namespace:MultiFunPlayer.Plugin;assembly=MultiFunPlayer"
+                       xmlns:s="https://github.com/canton7/Stylet"
+                       d:DesignHeight="450"
+                       d:DesignWidth="800"
+                       StatusContent="{Binding Status}"
+                       mc:Ignorable="d">
+    <plugin:PluginViewBase.Style>
+        <Style TargetType="{x:Type plugin:PluginViewBase}">
+            <Setter Property="StatusForeground" Value="{DynamicResource MaterialDesignErrorBrush}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="Connected">
+                    <Setter Property="StatusForeground" Value="{DynamicResource MaterialDesignSuccessBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Disconnected">
+                    <Setter Property="StatusForeground" Value="{DynamicResource MaterialDesignErrorBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Connecting">
+                    <Setter Property="StatusForeground" Value="{DynamicResource MaterialDesignPendingBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Disconnecting">
+                    <Setter Property="StatusForeground" Value="{DynamicResource MaterialDesignPendingBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </plugin:PluginViewBase.Style>
+
+    <plugin:PluginViewBase.ToolBarContent>
+        <StackPanel Orientation="Horizontal">
+            <Button Style="{StaticResource MaterialDesignToolBarButton}"
+                    Padding="8"
+                    Click="{s:Action OnConnectClick}"
+                    ToolTip="Toggle connect">
+                <material:PackIcon Width="19"
+                                   Height="19"
+                                   Kind="Play"/>
+            </Button>
+        </StackPanel>
+    </plugin:PluginViewBase.ToolBarContent>
+
+    <StackPanel HorizontalAlignment="Center">
+        <TextBlock FontSize="15"
+                   FontWeight="Bold"
+                   Text="InvertAxisPlus V1.0"/>
+
+        <TextBlock Text="{Binding Text}"
+                   TextAlignment="Center"
+                   Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}"/>
+
+        <!-- Ajout des CheckBoxes pour sélectionner les axes -->
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <CheckBox Content="L1" IsChecked="{Binding IsL1Selected}" Margin="5"/>
+            <CheckBox Content="L2" IsChecked="{Binding IsL2Selected}" Margin="5"/>
+            <CheckBox Content="R0" IsChecked="{Binding IsR0Selected}" Margin="5"/>
+            <CheckBox Content="R1" IsChecked="{Binding IsR1Selected}" Margin="5"/>
+            <CheckBox Content="R2" IsChecked="{Binding IsR2Selected}" Margin="5"/>
+        </StackPanel>
+
+        <!-- Utilisation de deux sliders pour définir les valeurs de seuil -->
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Random Threshold Min: " FontSize="16" FontWeight="Bold"/>
+            <Slider Minimum="0.0" Maximum="1.0" Value="{Binding RandomThresholdMin}" Width="150" Margin="0,0,10,0"/>
+            <TextBox Text="{Binding RandomThresholdMin, StringFormat='{}{0:P0}'}" Width="50" IsReadOnly="True"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Random Threshold Max: " FontSize="16" FontWeight="Bold"/>
+            <Slider Minimum="0.0" Maximum="1.0" Value="{Binding RandomThresholdMax}" Width="150" Margin="0,0,10,0"/>
+            <TextBox Text="{Binding RandomThresholdMax, StringFormat='{}{0:P0}'}" Width="50" IsReadOnly="True"/>
+        </StackPanel>
+
+        <!-- Ajout du slider pour le lissage -->
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Smoothing Level: " FontSize="16" FontWeight="Bold"/>
+            <Slider Minimum="0.0" Maximum="2.0" Value="{Binding SmoothingLevel}" Width="200"/>
+            <TextBox Text="{Binding SmoothingLevel, StringFormat='{}{0:P1}'}" Width="50" IsReadOnly="True"/>
+        </StackPanel>
+
+        <!-- Ajout du ComboBox pour sélectionner le type de lissage -->
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Smoothing Type: " FontSize="16" FontWeight="Bold"/>
+            <ComboBox ItemsSource="{Binding SmoothingTypes}" SelectedItem="{Binding SmoothingType}" Width="200"/>
+        </StackPanel>
+
+        <!-- Ajout du slider pour définir l'intervalle de mise à jour -->
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Update Interval (ms): " FontSize="16" FontWeight="Bold"/>
+            <Slider Minimum="125" Maximum="200" Value="{Binding UpdateInterval}" Width="200"/>
+            <TextBox Text="{Binding UpdateInterval}" Width="50" IsReadOnly="True"/>
+        </StackPanel>
+    </StackPanel>
+</plugin:PluginViewBase>
