@@ -1,6 +1,8 @@
 
 ![Screenshot 2025-04-16 213645](https://github.com/user-attachments/assets/ff7da453-b46f-451d-b4f9-7d76a8d61e7d)
 
+Please note, it only works on Multifunscript 1.33.3
+
 # AxisInvertPlusV3 (English)
 
 **AxisInvertPlusV3** is an advanced plugin for MultiFunPlayer that enables dynamic axis management, including inversion, synchronization, chaos, and random selection based on the selected main axis.
@@ -31,6 +33,8 @@
 - Testing and diagnostics of multi-axis hardware.
 
 ---
+
+attention, il ne marche que sur Multifunscript 1.33.3
 
 # AxisInvertPlusV3 (french)
 
